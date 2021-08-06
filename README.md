@@ -3,7 +3,7 @@
 
 # Intermediate Domain Module (IDM)
 
-This repository is the official implementation for [IDM: An Intermediate Domain Module for Domain Adaptive Person Re-ID](), which is accepted by [ICCV 2021 (Oral)](http://iccv2021.thecvf.com/node/44). 
+This repository is the official implementation for [IDM: An Intermediate Domain Module for Domain Adaptive Person Re-ID](http://arxiv.org/abs/2108.02413), which is accepted by [ICCV 2021 (Oral)](http://iccv2021.thecvf.com/node/44). 
 
 `IDM` achieves state-of-the-art performances on the **unsupervised domain adaptation** task for person re-ID.
 
