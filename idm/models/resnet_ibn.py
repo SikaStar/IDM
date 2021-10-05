@@ -93,7 +93,7 @@ class ResNetIBN(nn.Module):
         else:
             return bn_x
 
-        return prob
+        return prob, x
 
     def reset_params(self):
         for m in self.modules():
