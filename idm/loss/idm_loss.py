@@ -41,7 +41,7 @@ class BridgeProbLoss(nn.Module):
         self.num_classes = num_classes
         self.epsilon = epsilon
         self.logsoftmax = nn.LogSoftmax(dim=1).cuda()
-        self.device_num = 4
+        self.device_num = torch.cuda.device_count()
 
     def forward(self, inputs, targets, lam):
 
