@@ -182,25 +182,27 @@ def main_worker(args):
     trainer = IDM_Trainer(model, xbm, args.nclass, margin=args.margin, mu1=args.mu1, mu2=args.mu2, mu3=args.mu3)
 
     for epoch in range(args.epochs):
+        with torch.no_grad():
+            tgt_cluster_loader = get_test_loader(dataset_target, args.height, args.width,
+                                                 args.batch_size, args.workers, testset=sorted(dataset_target.train))
+            time.sleep(0.5)
+            target_features, _ = extract_features(model, tgt_cluster_loader, print_freq=50)
+            target_features = torch.cat([target_features[f].unsqueeze(0) for f, _, _ in
+                                         sorted(dataset_target.train)], 0)
 
-        tgt_cluster_loader = get_test_loader(dataset_target, args.height, args.width,
-                                             args.batch_size, args.workers, testset=sorted(dataset_target.train))
-        target_features, _ = extract_features(model, tgt_cluster_loader, print_freq=50)
-        target_features = torch.cat([target_features[f].unsqueeze(0) for f, _, _ in
-                                     sorted(dataset_target.train)], 0)
+            del tgt_cluster_loader
+            print('==> Create pseudo labels for unlabeled target domain with DBSCAN clustering')
 
-        del tgt_cluster_loader
-        print('==> Create pseudo labels for unlabeled target domain with DBSCAN clustering')
-      
-        rerank_dist = compute_jaccard_distance(target_features, k1=args.k1, k2=args.k2, use_gpu=False).numpy()
-        print('Clustering and labeling...')
-        eps = args.eps
-        cluster = DBSCAN(eps=eps, min_samples=4, metric='precomputed', n_jobs=-1)
-        labels = cluster.fit_predict(rerank_dist)
-        num_ids = len(set(labels)) - (1 if -1 in labels else 0)
-        args.t_class = num_ids
+            rerank_dist = compute_jaccard_distance(target_features, k1=args.k1, k2=args.k2, use_gpu=False).numpy()
+            print('Clustering and labeling...')
+            eps = args.eps
+            cluster = DBSCAN(eps=eps, min_samples=4, metric='precomputed', n_jobs=-1)
+            labels = cluster.fit_predict(rerank_dist)
+            del rerank_dist
+            num_ids = len(set(labels)) - (1 if -1 in labels else 0)
+            args.t_class = num_ids
 
-        print('\n Clustered into {} classes \n'.format(args.t_class))
+            print('\n Clustered into {} classes \n'.format(args.t_class))
 
 
         # generate new dataset and calculate cluster centers
@@ -223,8 +225,11 @@ def main_worker(args):
                                                args.batch_size, args.workers, args.num_instances, iters,
                                                trainset=new_dataset)
 
+	time.sleep(0.5)
         train_loader_source.new_epoch()
+	time.sleep(0.5)
         train_loader_target.new_epoch()
+	time.sleep(0.5)
         trainer.train(epoch, train_loader_source, train_loader_target, args.s_class, args.t_class, optimizer, 
                       print_freq=args.print_freq, train_iters=args.iters, use_xbm=args.use_xbm, stage=args.stage)
                       
