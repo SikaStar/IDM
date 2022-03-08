@@ -1,6 +1,29 @@
 ![Python >=3.7](https://img.shields.io/badge/Python->=3.7-blue.svg)
 ![PyTorch >=1.1](https://img.shields.io/badge/PyTorch->=1.1-yellow.svg)
 
+## News
+IDM has been extended to [IDM++](https://arxiv.org/abs/2203.01682). IDM++ is a strong cross-domain person re-ID method, which achieves new state of the art  under both the unsupervised domain adaptation (UDA) and domain generalization (DG) re-ID scenarios. The code will be updated. 
+
+## Citation
+If you find our work is useful for your research, please kindly cite our paper
+```
+@inproceedings{dai2021idm,
+  title={IDM: An Intermediate Domain Module for Domain Adaptive Person Re-ID},
+  author={Dai, Yongxing and Liu, Jun and Sun, Yifan and Tong, Zekun and Zhang, Chi and Duan, Ling-Yu},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  year={2021}
+}
+
+@article{dai2022bridging,
+  title={Bridging the Source-to-target Gap for Cross-domain Person Re-Identification with Intermediate Domains},
+  author={Dai, Yongxing and Sun, Yifan and Liu, Jun and Tong, Zekun and Yang, Yi and Duan, Ling-Yu},
+  journal={arXiv preprint arXiv:2203.01682},
+  year={2022}
+}
+```
+If you have any questions, please leave an issue or contact me: yongxingdai@pku.edu.cn
+
+
 # Intermediate Domain Module (IDM)
 
 This repository is the official implementation for [IDM: An Intermediate Domain Module for Domain Adaptive Person Re-ID](http://arxiv.org/abs/2108.02413), which is accepted by [ICCV 2021 (Oral)](http://iccv2021.thecvf.com/node/44). 
@@ -173,16 +196,5 @@ python3 examples/test.py --dsbn-idm --test-source  -d market1501 -a resnet50_idm
 ## Acknowledgement
 Our code is based on [MMT](https://github.com/yxgeee/MMT) and [SpCL](https://github.com/yxgeee/SpCL). Thanks for [Yixiao's](https://geyixiao.com/) wonderful works.
 
-## Citation
-If you find our work is useful for your research, please kindly cite our paper
-```
-@inproceedings{dai2021idm,
-  title={IDM: An Intermediate Domain Module for Domain Adaptive Person Re-ID},
-  author={Dai, Yongxing and Liu, Jun and Sun, Yifan and Tong, Zekun and Zhang, Chi and Duan, Ling-Yu},
-  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
-  year={2021}
-}
-```
-If you have any questions, please leave an issue or contact me: yongxingdai@pku.edu.cn
 
 
